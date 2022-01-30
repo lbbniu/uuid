@@ -183,7 +183,7 @@ func Must(uuid UUID, err error) UUID {
 // String returns the string form of uuid, xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 // , or "" if uuid is invalid.
 func (uuid UUID) String() string {
-	var buf [36]byte
+	var buf [32]byte
 	encodeHex(buf[:], uuid)
 	return string(buf[:])
 }
@@ -191,7 +191,7 @@ func (uuid UUID) String() string {
 // URN returns the RFC 2141 URN form of uuid,
 // urn:uuid:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx,  or "" if uuid is invalid.
 func (uuid UUID) URN() string {
-	var buf [36 + 9]byte
+	var buf [32 + 9]byte
 	copy(buf[:], "urn:uuid:")
 	encodeHex(buf[9:], uuid)
 	return string(buf[:])
@@ -199,14 +199,10 @@ func (uuid UUID) URN() string {
 
 func encodeHex(dst []byte, uuid UUID) {
 	hex.Encode(dst, uuid[:4])
-	dst[8] = '-'
-	hex.Encode(dst[9:13], uuid[4:6])
-	dst[13] = '-'
-	hex.Encode(dst[14:18], uuid[6:8])
-	dst[18] = '-'
-	hex.Encode(dst[19:23], uuid[8:10])
-	dst[23] = '-'
-	hex.Encode(dst[24:], uuid[10:])
+	hex.Encode(dst[8:13], uuid[4:6])
+	hex.Encode(dst[13:18], uuid[6:8])
+	hex.Encode(dst[18:23], uuid[8:10])
+	hex.Encode(dst[23:], uuid[10:])
 }
 
 // Variant returns the variant encoded in uuid.
