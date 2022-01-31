@@ -199,10 +199,10 @@ func (uuid UUID) URN() string {
 
 func encodeHex(dst []byte, uuid UUID) {
 	hex.Encode(dst, uuid[:4])
-	hex.Encode(dst[8:13], uuid[4:6])
-	hex.Encode(dst[13:18], uuid[6:8])
-	hex.Encode(dst[18:23], uuid[8:10])
-	hex.Encode(dst[23:], uuid[10:])
+	hex.Encode(dst[8:12], uuid[4:6])
+	hex.Encode(dst[12:16], uuid[6:8])
+	hex.Encode(dst[16:20], uuid[8:10])
+	hex.Encode(dst[20:], uuid[10:])
 }
 
 // Variant returns the variant encoded in uuid.
